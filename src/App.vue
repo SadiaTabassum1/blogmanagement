@@ -1,28 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="mainapp">
+    <v-main>
+       <v-app-bar
+      fixed
+      color="#6A76AB"
+      dark
+    >
+      <!-- <v-app-bar-nav-icon><img width="70px" height="60px" style="margin-left:20px" src="./assets/Free_Sample_By_Wix.jpeg"></v-app-bar-nav-icon> -->
+       <div style="width:30px"></div>
+      <v-toolbar-title>Blog MANAGEMENT</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+      
+      <v-btn style="margin-right:20px;" to="/" icon>
+        <v-icon size="30px">mdi-home</v-icon>
+      </v-btn>
+   
+     
+    </v-app-bar>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
+  components: {
+   
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#mainapp{
+  background-color: rgb(48, 48, 50);
 }
 </style>

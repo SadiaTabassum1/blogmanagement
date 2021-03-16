@@ -1,0 +1,204 @@
+<template>
+  <div id="formdiv">
+    <div style="padding: 5%">
+      <v-stepper v-model="e1">
+        <v-stepper-header>
+          <v-stepper-step
+            :complete="e1 > 1"
+            step="1"
+            color="#6A76AB"
+          ></v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step
+            :complete="e1 > 2"
+            step="2"
+            color="#6A76AB"
+          ></v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step
+            step="3"
+            :complete="isOkay"
+            color="#6A76AB"
+          ></v-stepper-step>
+        </v-stepper-header>
+
+        <v-stepper-items>
+          <v-stepper-content step="1">
+            <validation-observer ref="observer" v-slot="{ invalid }">
+              <form @submit.prevent="submit">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Name"
+                  rules="required"
+                >
+                  <v-text-field
+                    v-model="blogtitle"
+                    :error-messages="errors"
+                    label="Title"
+                    required
+                    color="#6A76AB"
+                  >
+                  </v-text-field>
+                </validation-provider>
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Description"
+                  rules="required|min:100"
+                >
+                  <v-textarea
+                    v-model="blogdescription"
+                    :error-messages="errors"
+                    color="#6A76AB"
+                    required
+                  >
+                    <template v-slot:label>
+                      <div>Bio</div>
+                    </template>
+                  </v-textarea>
+                </validation-provider>
+
+                <v-btn color="primary" @click="e1 = 2" :disabled="invalid">
+                  Next
+                </v-btn>
+              </form>
+            </validation-observer>
+          </v-stepper-content>
+          <v-stepper-content step="2">
+            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg1"></v-file-input><br>
+            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg2" v-show="img2"></v-file-input><br>
+            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg3" v-show="img3"></v-file-input><br>
+            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg4" v-show="img4"></v-file-input><br>
+            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg5" v-show="img5"></v-file-input>
+            <v-btn color="primary" @click="e1 = 3"> Next </v-btn>
+          </v-stepper-content>
+          <v-stepper-content step="3">
+            <div style="padding:10%">
+              <v-row class="mb-5"> <h2 style="color:#6A76AB">{{blogtitle}}</h2></v-row>
+               <v-row> <div class="blogdesdiv">{{blogdescription}}</div></v-row>
+              <v-row>
+                <v-col v-for="img in img1url" :key="img" sm="4">
+                <v-container class="">
+                  <v-img :src="img" aspect-ratio="1.7"></v-img>
+                </v-container>
+                </v-col>
+              </v-row>
+            </div>
+            <v-btn @click="e1 = 1" color="warning">Save</v-btn>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+    </div>
+  </div>
+</template>
+<script>
+import { required, min } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+
+setInteractionMode("eager");
+
+extend("required", {
+  ...required,
+  message: "{_field_} can not be empty",
+});
+extend("min", {
+  ...min,
+  message: "{_field_} may not be less than {length} characters",
+});
+export default {
+  name: "MultiStepForm",
+  data() {
+    return {
+      e1: 1,
+      blogtitle: "",
+      blogdescription: "",
+      isOkay: false,
+      img2: false,
+      img3: false,
+      img4: false,
+      img5: false,
+      img1url: [],
+      imgurl: null,
+    };
+  },
+  methods: {
+    onUpload() {
+      this.$refs.myfile.click();
+    },
+    onchangeimg1(e) {
+      this.img2 = true;
+      this.imgurl = URL.createObjectURL(e);
+      this.img1url.push(URL.createObjectURL(e));
+    },
+    onchangeimg2(e) {
+      this.img3 = true;
+      this.img2 = true;
+      this.imgurl = URL.createObjectURL(e);
+      this.img1url.push(this.imgurl);
+      console.log(this.img1url);
+    },
+    onchangeimg3(e) {
+      this.img4 = true;
+      this.img2 = true;
+      this.imgurl = URL.createObjectURL(e);
+      this.img1url.push(URL.createObjectURL(e));
+    },
+    onchangeimg4(e) {
+      this.img5 = true;
+      this.img2 = true;
+      this.imgurl = URL.createObjectURL(e);
+      this.img1url.push(URL.createObjectURL(e));
+    },
+    onchangeimg5(e) {
+     this.img2 = true;
+      this.imgurl = URL.createObjectURL(e);
+      this.img1url.push(URL.createObjectURL(e));
+    },
+  },
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+  },
+};
+</script>
+<style scoped>
+h1,
+h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.blogdesdiv{
+  border: 2px solid #6A76AB;
+  padding: 5%;
+  border-radius: 15px;
+}
+#formdiv {
+  margin: 0 auto;
+  max-width: 900px;
+  height: inherit;
+  margin-top: 10%;
+  box-sizing: border-box;
+  border-radius: 15px;
+  background-color: rgb(32, 32, 32);
+  padding: 1%;
+  margin-bottom: 5%;
+}
+</style>
