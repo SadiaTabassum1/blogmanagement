@@ -32,7 +32,6 @@
               <form @submit.prevent="submit">
                 <validation-provider
                   v-slot="{ errors }"
-                  name="Name"
                   rules="required"
                 >
                   <v-text-field
@@ -61,33 +60,66 @@
                   </v-textarea>
                 </validation-provider>
 
-                <v-btn color="primary" @click="e1 = 2" :disabled="invalid">
+                <v-btn color="#6a76ab" @click="e1 = 2" :disabled="invalid">
                   Next
                 </v-btn>
               </form>
             </validation-observer>
           </v-stepper-content>
           <v-stepper-content step="2">
-            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg1"></v-file-input><br>
-            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg2" v-show="img2"></v-file-input><br>
-            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg3" v-show="img3"></v-file-input><br>
-            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg4" v-show="img4"></v-file-input><br>
-            <v-file-input accept="image/*" label="Image Input" @change="onchangeimg5" v-show="img5"></v-file-input>
-            <v-btn color="primary" @click="e1 = 3"> Next </v-btn>
+            
+              
+                  <v-file-input
+                    :rules="rules"
+                    accept="image/*"
+                    label="Image Input"
+                    @change="onchangeimg1"
+                  ></v-file-input>
+                
+                <v-file-input
+                  accept="image/*"
+                  label="Image Input"
+                  @change="onchangeimg2"
+                  v-show="img2"
+                ></v-file-input>
+                <v-file-input
+                  accept="image/*"
+                  label="Image Input"
+                  @change="onchangeimg3"
+                  v-show="img3"
+                ></v-file-input>
+                <v-file-input
+                  accept="image/*"
+                  label="Image Input"
+                  @change="onchangeimg4"
+                  v-show="img4"
+                ></v-file-input>
+                <v-file-input
+                  accept="image/*"
+                  label="Image Input"
+                  @change="onchangeimg5"
+                  v-show="img5"
+                ></v-file-input>
+                <v-btn color="#6a76ab" @click="e1 = 3"  v-show="showNext"> Next </v-btn>
+             
           </v-stepper-content>
           <v-stepper-content step="3">
-            <div style="padding:10%">
-              <v-row class="mb-5"> <h2 style="color:#6A76AB">{{blogtitle}}</h2></v-row>
-               <v-row> <div class="blogdesdiv">{{blogdescription}}</div></v-row>
+            <div style="padding: 10%">
+              <v-row class="mb-5">
+                <h2 style="color: #6a76ab">{{ blogtitle }}</h2></v-row
+              >
+              <v-row>
+                <div class="blogdesdiv">{{ blogdescription }}</div></v-row
+              >
               <v-row>
                 <v-col v-for="img in img1url" :key="img" sm="4">
-                <v-container class="">
-                  <v-img :src="img" aspect-ratio="1.7"></v-img>
-                </v-container>
+                  <v-container class="">
+                    <v-img :src="img" aspect-ratio="1.7"></v-img>
+                  </v-container>
                 </v-col>
               </v-row>
             </div>
-            <v-btn @click="e1 = 1" color="warning">Save</v-btn>
+            <v-btn @click="AddNew" color="#6a76ab">Save</v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -95,6 +127,7 @@
   </div>
 </template>
 <script>
+import {  mapMutations } from "vuex";
 import { required, min } from "vee-validate/dist/rules";
 import {
   extend,
@@ -126,42 +159,67 @@ export default {
       img4: false,
       img5: false,
       img1url: [],
+      images:[],
       imgurl: null,
+      showNext:false,
+      blog:{
+        title:"",
+        description:"",
+        image:[]
+      },
+      rules: [
+   v => !!v || 'File is required',
+   v => (v && v.size > 0) || 'File is required',
+],
     };
   },
+  
   methods: {
-    onUpload() {
-      this.$refs.myfile.click();
-    },
+    ...mapMutations(["addBlog"]),
     onchangeimg1(e) {
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
       this.img1url.push(URL.createObjectURL(e));
+ 
+      this.showNext=true;
     },
     onchangeimg2(e) {
       this.img3 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
+   
       this.img1url.push(this.imgurl);
       console.log(this.img1url);
+      console.log(this.images);
     },
     onchangeimg3(e) {
       this.img4 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
+      
       this.img1url.push(URL.createObjectURL(e));
     },
     onchangeimg4(e) {
       this.img5 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
+      
       this.img1url.push(URL.createObjectURL(e));
     },
     onchangeimg5(e) {
-     this.img2 = true;
+      this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
+      
       this.img1url.push(URL.createObjectURL(e));
     },
+    AddNew(){
+      this.blog.title=this.blogtitle;
+      this.blog.description=this.blogdescription;
+      this.blog.image=this.img1url;
+      this.$store.commit("addBlog",this.blog);
+       this.$router.push({path:'/'});
+    }
+
   },
   components: {
     ValidationObserver,
@@ -185,8 +243,8 @@ li {
 a {
   color: #42b983;
 }
-.blogdesdiv{
-  border: 2px solid #6A76AB;
+.blogdesdiv {
+  border: 2px solid #6a76ab;
   padding: 5%;
   border-radius: 15px;
 }

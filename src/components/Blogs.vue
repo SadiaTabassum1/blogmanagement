@@ -24,8 +24,39 @@
           </div>
         </div>
         <div id="bloglistdiv" v-for="blog in allBlogs" :key=blog.id>
-            <h1>{{blog.title}}</h1>
-            <h2>{{blog.description}}</h2>
+            <v-card
+   
+    class="mx-auto my-12"
+    
+  >
+    <template slot="progress">
+      <v-progress-linear
+        color="deep-purple"
+        height="10"
+        indeterminate
+      ></v-progress-linear>
+    </template>
+
+    <!-- <v-img
+      height="250"
+      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+    ></v-img> -->
+
+    <v-card-title>{{blog.title}}</v-card-title>
+
+    <v-card-text>
+      {{blog.description}}
+        
+    </v-card-text>
+    <v-card-title>
+      <div v-for="img in blog.image" :key="img">
+        <v-img :src="img"></v-img>
+      </div>
+    </v-card-title>
+
+    <v-divider class="mx-4"></v-divider>
+  </v-card>
+            
         </div>
         </div>
     </div>
@@ -33,10 +64,22 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data(){
+   return{
+     blogs:[]
+   }
+  },
+  created(){
+    
+
+
+  },
   methods:{
     addBlog(){
       this.$router.push({path:'/addBlogs'});
-    }
+    },
+
+ 
 
   },
    computed: {
@@ -44,6 +87,7 @@ export default {
     ...mapGetters(["allBlogs"]),
     
   }, 
+  
 }
 </script>
 <style scoped>
@@ -57,6 +101,7 @@ export default {
   border-radius: 15px;
   color: #cbcbcb;
   padding: 5%;
+  border:1px solid #6AE6D1;
 }
 #distitle {
   display: flex;
@@ -77,7 +122,7 @@ export default {
 #bloglistdiv{
     margin-top: 2%;
     margin-left: 12px;
-    border: 1px solid black;
+   
 
 }
 </style>
