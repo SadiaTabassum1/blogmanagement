@@ -48,12 +48,20 @@
       {{blog.description}}
         
     </v-card-text>
-    <v-card-title>
-      <div v-for="img in blog.image" :key="img">
-        <v-img :src="img"></v-img>
+    <!-- <v-card-title>
+      <div v-for="image in blog.image" :key="image">
+        <v-img :src="getImgUrl(image)"></v-img>
       </div>
-    </v-card-title>
-
+    </v-card-title> -->
+    <v-carousel>
+    <v-carousel-item
+      v-for="img in blog.image"
+      :key="img"
+      :src="getImgUrl(img)"
+      reverse-transition="fade-transition"
+      transition="fade-transition"
+    ></v-carousel-item>
+  </v-carousel>
     <v-divider class="mx-4"></v-divider>
   </v-card>
             
@@ -66,7 +74,22 @@ import { mapGetters } from "vuex";
 export default {
   data(){
    return{
-     blogs:[]
+     blogs:[],
+      colors: [
+          'green',
+          'secondary',
+          'yellow darken-4',
+          'red lighten-2',
+          'orange darken-1',
+        ],
+        cycle: false,
+        slides: [
+          'First',
+          'Second',
+          'Third',
+          'Fourth',
+          'Fifth',
+        ],
    }
   },
   created(){
@@ -79,7 +102,17 @@ export default {
       this.$router.push({path:'/addBlogs'});
     },
 
- 
+  getImgUrl(pic) {
+    if(pic.includes("blob")==true)
+    {
+      return pic;
+    }
+    else
+    {
+       return require('../assets/'+pic)
+    }
+   
+}
 
   },
    computed: {
