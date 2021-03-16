@@ -1,56 +1,36 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
+  <v-app id="mainapp">
+    <v-main>
+       <!-- <v-app-bar
+      fixed
+      color="#6A76AB"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-app-bar-nav-icon><img width="70px" height="60px" style="margin-left:20px" src="./assets/Free_Sample_By_Wix.jpeg"></v-app-bar-nav-icon>
+       <div style="width:30px"></div>
+      <v-toolbar-title>Blog MANAGEMENT SYSTEM</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      
+      <v-btn style="margin-right:20px;" to="/" icon>
+        <v-icon size="30px">mdi-home</v-icon>
       </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
+   
+     
+    </v-app-bar> -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+   
   },
 
   data: () => ({
@@ -58,3 +38,8 @@ export default {
   }),
 };
 </script>
+<style>
+#mainapp{
+  background-color:  rgb(48, 48, 50);;
+}
+</style>

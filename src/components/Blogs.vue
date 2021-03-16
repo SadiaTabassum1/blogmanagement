@@ -1,5 +1,7 @@
 <template>
-    <div><h1>In the Home page</h1></div>
+    <div>
+        <h1>In the Home page</h1>
+        </div>
 </template>
 <script>
 export default {
