@@ -1,5 +1,6 @@
 <template>
     <div>   
+      
         <div  id="maindiv">
          <div id="distitle">
           <div id="title">
@@ -23,7 +24,7 @@
             </v-btn>
           </div>
         </div>
-        
+        <div style="margin-left:400px"><pulse-loader  :loading="loading" color="#6AE6D1" size="20px" margin="30px"></pulse-loader></div>
         <div id="bloglistdiv"  v-for="blog in blogs" :key=blog.id>
             <v-card
    
@@ -67,15 +68,21 @@
 <script>
 // import { mapGetters } from "vuex";
 import db from './firebaseInit';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   data(){
    return{
      blogs:[],
      blogImages:[],
-    
+     loading:true,
         
    }
   },
+  components:{
+    'PulseLoader': PulseLoader
+
+  },
+
   created(){
     
    db.collection('Blogs').get().then(querySnapshot =>{
@@ -89,7 +96,7 @@ export default {
        }
        
        this.blogs.push(data);
-       
+       this.loading=false;
      })
    }) ;
    
