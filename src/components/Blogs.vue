@@ -1,6 +1,6 @@
 <template>
     <div>   
-        <div id="maindiv">
+        <div  id="maindiv">
          <div id="distitle">
           <div id="title">
             <v-row>
@@ -23,7 +23,8 @@
             </v-btn>
           </div>
         </div>
-        <div id="bloglistdiv" v-for="blog in allBlogs" :key=blog.id>
+        
+        <div id="bloglistdiv"  v-for="blog in blogs" :key=blog.id>
             <v-card
    
     class="mx-auto my-12"
@@ -46,18 +47,12 @@
 
     <v-card-text>
       {{blog.description}}
-        
     </v-card-text>
-    <!-- <v-card-title>
-      <div v-for="image in blog.image" :key="image">
-        <v-img :src="getImgUrl(image)"></v-img>
-      </div>
-    </v-card-title> -->
     <v-carousel>
     <v-carousel-item
-      v-for="img in blog.image"
+      v-for="img in blog.images"
       :key="img"
-      :src="getImgUrl(img)"
+      :src="img"
       reverse-transition="fade-transition"
       transition="fade-transition"
     ></v-carousel-item>
@@ -70,17 +65,34 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+import db from './firebaseInit';
 export default {
   data(){
    return{
      blogs:[],
+     blogImages:[],
+    
         
    }
   },
   created(){
     
-
+   db.collection('Blogs').get().then(querySnapshot =>{
+     querySnapshot.forEach(doc =>{
+       console.log(doc.data().images.length);
+       
+       const data={
+          'title':doc.data().title,
+          'description':doc.data().description,
+          'images':doc.data().images
+       }
+       
+       this.blogs.push(data);
+       
+     })
+   }) ;
+   
 
   },
   methods:{
@@ -104,7 +116,7 @@ export default {
   },
    computed: {
     
-    ...mapGetters(["allBlogs"]),
+    // ...mapGetters(["allBlogs"]),
     
   }, 
   
@@ -144,5 +156,8 @@ export default {
     margin-left: 12px;
    
 
+}
+.v-progress-circular {
+  margin: 1rem;
 }
 </style>
