@@ -81,6 +81,7 @@
                     label="Image Input"
                     prepend-icon="mdi-camera"
                     @change="onchangeimg1"
+                    :clearable="false"
                   ></v-file-input>
                 
                 <v-file-input
@@ -89,6 +90,7 @@
                   prepend-icon="mdi-camera"
                   @change="onchangeimg2"
                   v-show="img2"
+                  :clearable="false"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
@@ -96,6 +98,7 @@
                   prepend-icon="mdi-camera"
                   @change="onchangeimg3"
                   v-show="img3"
+                  :clearable="false"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
@@ -103,6 +106,7 @@
                   prepend-icon="mdi-camera"
                   @change="onchangeimg4"
                   v-show="img4"
+                  :clearable="false"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
@@ -110,6 +114,7 @@
                   prepend-icon="mdi-camera"
                   @change="onchangeimg5"
                   v-show="img5"
+                  :clearable="false"
                 ></v-file-input>
                 <v-btn style="color:white" color="#6a76ab" @click="e1 = 3"  v-show="showNext"> Next </v-btn>
              
