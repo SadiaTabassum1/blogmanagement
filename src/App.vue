@@ -6,7 +6,7 @@
       color="#6A76AB"
       dark
     >
-      <!-- <v-app-bar-nav-icon><img width="70px" height="60px" style="margin-left:20px" src="./assets/Free_Sample_By_Wix.jpeg"></v-app-bar-nav-icon> -->
+      <v-app-bar-nav-icon><img width="90px" height="60px" style="margin-left:20px" src="./assets/navlogo.jpeg"></v-app-bar-nav-icon>
        <div style="width:30px"></div>
       <v-toolbar-title>Blog MANAGEMENT</v-toolbar-title>
 

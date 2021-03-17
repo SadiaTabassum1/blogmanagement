@@ -75,21 +75,7 @@ export default {
   data(){
    return{
      blogs:[],
-      colors: [
-          'green',
-          'secondary',
-          'yellow darken-4',
-          'red lighten-2',
-          'orange darken-1',
-        ],
-        cycle: false,
-        slides: [
-          'First',
-          'Second',
-          'Third',
-          'Fourth',
-          'Fifth',
-        ],
+        
    }
   },
   created(){
@@ -103,6 +89,7 @@ export default {
     },
 
   getImgUrl(pic) {
+    console.log(pic);
     if(pic.includes("blob")==true)
     {
       return pic;

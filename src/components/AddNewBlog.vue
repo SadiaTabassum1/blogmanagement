@@ -66,7 +66,7 @@
                   </v-textarea>
                 </validation-provider>
 
-                <v-btn color="#6a76ab" @click="e1 = 2" :disabled="invalid">
+                <v-btn style="color:white" color="#6a76ab" @click="e1 = 2" :disabled="invalid">
                   Next
                 </v-btn>
               </form>
@@ -79,34 +79,39 @@
                     :rules="rules"
                     accept="image/*"
                     label="Image Input"
+                    prepend-icon="mdi-camera"
                     @change="onchangeimg1"
                   ></v-file-input>
                 
                 <v-file-input
                   accept="image/*"
                   label="Image Input"
+                  prepend-icon="mdi-camera"
                   @change="onchangeimg2"
                   v-show="img2"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
                   label="Image Input"
+                  prepend-icon="mdi-camera"
                   @change="onchangeimg3"
                   v-show="img3"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
                   label="Image Input"
+                  prepend-icon="mdi-camera"
                   @change="onchangeimg4"
                   v-show="img4"
                 ></v-file-input>
                 <v-file-input
                   accept="image/*"
                   label="Image Input"
+                  prepend-icon="mdi-camera"
                   @change="onchangeimg5"
                   v-show="img5"
                 ></v-file-input>
-                <v-btn color="#6a76ab" @click="e1 = 3"  v-show="showNext"> Next </v-btn>
+                <v-btn style="color:white" color="#6a76ab" @click="e1 = 3"  v-show="showNext"> Next </v-btn>
              
           </v-stepper-content>
           <v-stepper-content step="3">
@@ -125,7 +130,7 @@
                 </v-col>
               </v-row>
             </div>
-            <v-btn @click="AddNew" color="#6a76ab">Save</v-btn>
+            <v-btn style="margin-left:42%;width:150px;color:white" @click="AddNew" color="#6a76ab">Save</v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -187,14 +192,12 @@ export default {
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
       this.img1url.push(URL.createObjectURL(e));
- 
       this.showNext=true;
     },
     onchangeimg2(e) {
       this.img3 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
-   
       this.img1url.push(this.imgurl);
       console.log(this.img1url);
       console.log(this.images);
@@ -203,20 +206,17 @@ export default {
       this.img4 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
-      
       this.img1url.push(URL.createObjectURL(e));
     },
     onchangeimg4(e) {
       this.img5 = true;
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
-      
       this.img1url.push(URL.createObjectURL(e));
     },
     onchangeimg5(e) {
       this.img2 = true;
       this.imgurl = URL.createObjectURL(e);
-      
       this.img1url.push(URL.createObjectURL(e));
     },
     AddNew(){
@@ -224,7 +224,7 @@ export default {
       this.blog.description=this.blogdescription;
       this.blog.image=this.img1url;
       this.$store.commit("addBlog",this.blog);
-       this.$router.push({path:'/'});
+      this.$router.push({path:'/'});
     }
 
   },
@@ -262,6 +262,7 @@ export default {
   background-color: rgb(32, 32, 32);
   padding: 1%;
   margin-bottom: 5%;
+  
 }
 #stepper
 {
